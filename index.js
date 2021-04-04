@@ -8,8 +8,8 @@ require('dotenv').config()
 let mail = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.email,
-        pass: process.env.pswd
+        user: 'bogatorjov.s@gmail.com',
+        pass: '644839712Pup'
     }
 });
 
@@ -27,8 +27,10 @@ app.get('/send/:email', (req, res) => {
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
+            res.send(error);
         } else {
             console.log('Email sent: ' + info.response);
+            res.send(info.response);
         }
     });
 })
