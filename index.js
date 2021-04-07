@@ -6,14 +6,12 @@ require('dotenv').config()
 
 
 let mail = nodemailer.createTransport({
-    service: 'gmail',//smtp.gmail.com  //in place of service use host...
-    secure: false,//true
-    port: 25,//465
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-        user: 'example@gmail.com',
-        pass: 'password'
-    }, tls: {
-        rejectUnauthorized: false
+        user: process.env.email,
+        pass: process.env.pswd
     }
 });
 
