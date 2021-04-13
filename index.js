@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 const nodemailer = require('nodemailer');
+const fetch = require("node-fetch");
 require('dotenv').config()
+
+
+const clientId = '3a59134e661f4dfa9863e9c825e0d509';
+const clientSecret = 'ceb50b1df89b43bf969c90d7464486d3';
 
 
 let mail = nodemailer.createTransport({
@@ -37,9 +42,49 @@ app.get('/send/:email', (req, res) => {
     });
 })
 
+app.get('/song/:track', async (req, res) => {
+    const getToken = async () => {
+
+        const result = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')
+            },
+            body: 'grant_type=client_credentials'
+        });
+
+        const data = await result.json();
+        return data.access_token;
+    }
+    const token = await (getToken());
+    const songs = await getTrack(token, req.params.track);
+    console.log('after', songs);
+    res.send(songs);
+})
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
 
+const getTrack = async (token, track) => {
 
+    const result = await fetch(`https://api.spotify.com/v1/search?q=track:${track}&type=track`, {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token }
+    });
+
+    const data = await result.json();
+    let values = [];
+    data.tracks.items.forEach(element => {
+        const a = {
+            name: element.artists[0].name,
+            trackName: element.name,
+            images: element.album.images,
+            uri: element.uri
+        }
+        values.push(a);
+    });
+    return values;
+}
 
