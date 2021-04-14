@@ -9,6 +9,20 @@ require('dotenv').config()
 const clientId = '3a59134e661f4dfa9863e9c825e0d509';
 const clientSecret = 'ceb50b1df89b43bf969c90d7464486d3';
 
+const getToken = async () => {
+
+    const result = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')
+        },
+        body: 'grant_type=client_credentials'
+    });
+
+    const data = await result.json();
+    return data.access_token;
+}
 
 let mail = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -42,24 +56,14 @@ app.get('/send/:email', (req, res) => {
     });
 })
 
+app.get('/token', (req, res) => {
+    const token = await(getToken());
+    res.send(token);
+})
+
 app.get('/song/:track', async (req, res) => {
-    const getToken = async () => {
-
-        const result = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')
-            },
-            body: 'grant_type=client_credentials'
-        });
-
-        const data = await result.json();
-        return data.access_token;
-    }
     const token = await (getToken());
     const songs = await getTrack(token, req.params.track);
-    console.log('after', songs);
     res.send(songs);
 })
 
