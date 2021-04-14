@@ -56,8 +56,8 @@ app.get('/send/:email', (req, res) => {
     });
 })
 
-app.get('/token', (req, res) => {
-    const token = await(getToken());
+app.get('/token', async (req, res) => {
+    const token = await (getToken());
     res.send(token);
 })
 
