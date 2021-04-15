@@ -4,7 +4,9 @@ const port = process.env.PORT || 5000;
 const nodemailer = require('nodemailer');
 const fetch = require("node-fetch");
 require('dotenv').config()
+var cors = require('cors');
 
+app.use(cors())
 
 const clientId = '3a59134e661f4dfa9863e9c825e0d509';
 const clientSecret = 'ceb50b1df89b43bf969c90d7464486d3';
@@ -89,6 +91,6 @@ const getTrack = async (token, track) => {
         }
         values.push(a);
     });
-    return values;
+    return data;
 }
 
