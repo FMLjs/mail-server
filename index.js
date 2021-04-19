@@ -91,6 +91,6 @@ const getTrack = async (token, track) => {
         }
         values.push(a);
     });
-    return data;
+    return values;
 }
 
