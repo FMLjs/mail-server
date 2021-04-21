@@ -58,10 +58,10 @@ app.get('/send/:email', (req, res) => {
     });
 })
 
-app.get('/token', async (req, res) => {
-    const token = await (getToken());
-    res.send(token);
-})
+// app.get('/token', async (req, res) => {
+//     const token = await (getToken());
+//     res.send(token);
+// })
 
 app.get('/song/:track', async (req, res) => {
     const token = await (getToken());
@@ -87,7 +87,8 @@ const getTrack = async (token, track) => {
             name: element.artists[0].name,
             trackName: element.name,
             images: element.album.images,
-            uri: element.uri
+            uri: element.uri,
+            preview_url: element.preview_url
         }
         values.push(a);
     });
