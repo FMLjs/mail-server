@@ -86,7 +86,7 @@ const getTrack = async (token, track) => {
         const a = {
             name: element.artists[0].name,
             trackName: element.name,
-            images: element.album.images,
+            imgUrl: element.album.images[2].url,
             uri: element.uri,
             preview_url: element.preview_url
         }
