@@ -75,7 +75,7 @@ app.listen(port, () => {
 
 const getTrack = async (token, track) => {
 
-    const result = await fetch(`https://api.spotify.com/v1/search?q=track:${track}&type=track`, {
+    const result = await fetch(`https://api.spotify.com/v1/search?q=track:${track}&type=track&limit=8`, {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + token }
     });
