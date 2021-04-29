@@ -45,7 +45,7 @@ app.get('/send/:email', (req, res) => {
         from: 'bogatorjov.s@gmail.com',
         to: req.params.email,
         subject: 'Download .apk for my application',
-        text: 'https://www.dropbox.com/s/uf7fpv5iyg8ji90/dating-app-fb18573527bf442b91776b961a2c90a3-signed.apk?dl=0'
+        text: 'https://www.dropbox.com/s/7nq1wko4ivbpfvi/app-release.apk?dl=0'
     };
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
