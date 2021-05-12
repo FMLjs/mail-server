@@ -8,8 +8,6 @@ var cors = require('cors');
 
 app.use(cors())
 
-const clientId = '3a59134e661f4dfa9863e9c825e0d509';
-const clientSecret = 'ceb50b1df89b43bf969c90d7464486d3';
 
 const getToken = async () => {
 
@@ -17,7 +15,7 @@ const getToken = async () => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')
+            'Authorization': 'Basic ' + Buffer.from(process.env.clientId + ':' + process.env.clientSecret).toString('base64')
         },
         body: 'grant_type=client_credentials'
     });
